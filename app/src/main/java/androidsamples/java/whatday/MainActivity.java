@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
       String month = monthInput.getText().toString();
       String year = yearInput.getText().toString();
 
-
       DateModel dateObj= new DateModel();
       DateModel.initialize(year,month,date);
 
@@ -50,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
           // check for present, past or future
           String d=date+"/"+month+"/"+year+" ";
           Calendar c = Calendar.getInstance();
+
           c.set(Calendar.MONTH, Integer.parseInt(month)-1);
           c.set(Calendar.DATE, Integer.parseInt(date));
           c.set(Calendar.YEAR, Integer.parseInt(year));
@@ -68,14 +68,12 @@ public class MainActivity extends AppCompatActivity {
 //          // setting the message
 //          tv.setText(res);
 //        }
-        //else
-          //{
-          // for an invalid date we'll print the reason
+
           String pointer = dateObj.msg;
           String msg=getResources().getString(Integer.parseInt(pointer));
           tv.setText(msg);
 
-        //}
+
       }
 //      catch (Exception e)
 //      {

@@ -1,6 +1,8 @@
 package androidsamples.java.whatday;
 
 import androidx.annotation.NonNull;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -9,7 +11,7 @@ import java.util.Date;
  */
 public class DateModel {
 
-  static String year,month,date;
+  static String year,month,date,msg;
 
 
   /**
@@ -40,34 +42,22 @@ public class DateModel {
   @NonNull
   public static String getMessage() {
     // TODO implement the method to match the description
+     SimpleDateFormat simpleDateFormat;
 
-    int dateInt = Integer.parseInt(dateInput.getText().toString());
-    int monthInt = Integer.parseInt(monthInput.getText().toString());
-    int yearInt = Integer.parseInt(yearInput.getText().toString());
-
-    monthInt--;
-      int flag = 0;
-
-      if(dateInt < 0 || dateInt > 31)
-        {
-          txtOutput.setText("Invalid Date");
-          flag=-1;
-        }
-      else if(monthInt < 0 || monthInt > 12)
-        {
-          txtOutput.setText("Invalid Month");
-          flag=-1;
-        }
 
       Calendar calendar = Calendar.getInstance();
       calendar.set(Calendar.DAY_OF_MONTH,Integer.parseInt(date));// Day of the month (1-31)
       calendar.set(Calendar.MONTH,Integer.parseInt(month)-1);// Month (0-11)
-      calendar.set(Calendar.YEAR,Integer.parseInt(year));
+      calendar.set(Calendar.YEAR,Integer.parseInt(year));//Year
+      simpleDateFormat = new SimpleDateFormat("EEEE");
+    return  simpleDateFormat.format(calendar.getTime());
+  }
 
-      
+
+
 //      calendar.set(yearInt, monthInt, dateInt);
 //      Date currentDate = calender.getTime();
-//      int currentDay = currentDate.getDay();
+        //int currentDay = currentDate.getDay();
 //      int min = calender.getMinimum(Calendar.YEAR);
 //      String dayText;
 //      System.out.println("Hello" + dateInt);
@@ -94,9 +84,25 @@ public class DateModel {
 //
 
 
+    public int dateValidation(String year, String month, String date) {
+        int d=Integer.parseInt(date);
+        int m=Integer.parseInt(month);
+        int y=Integer.parseInt(year);
+        m--;
+      int flag = 0;
 
+      if(d < 0 || d > 31)
+        {
+          msg="Invalid Date";
+          flag=-1;
+        }
+      else if(m < 0 || m > 12)
+        {
+          msg="Invalid Month";
+          flag=-1;
+        }
+      
 
-
-    return "Placeholder";
-  }
+        return flag;
+    }
 }

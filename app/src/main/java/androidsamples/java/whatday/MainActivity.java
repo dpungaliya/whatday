@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
   private EditText yearInput;
   private Button checkOutput;
   private TextView txtOutput;
+  public TextView tv;
 
 
   @Override
@@ -39,6 +41,46 @@ public class MainActivity extends AppCompatActivity {
 
       DateModel dateObj= new DateModel();
       DateModel.initialize(year,month,date);
+
+      int valid = dateObj.dateValidation(year,month,date);
+
+      if (valid==0) {
+          // getting the day
+          String res = DateModel.getMessage();
+          // check for present, past or future
+          String d=date+"/"+month+"/"+year+" ";
+          Calendar c = Calendar.getInstance();
+          c.set(Calendar.MONTH, Integer.parseInt(month)-1);
+          c.set(Calendar.DATE, Integer.parseInt(date));
+          c.set(Calendar.YEAR, Integer.parseInt(year));
+          Date dateEntered = c.getTime();
+          Date currentDate = new Date();
+          int var=currentDate.compareTo(dateEntered);
+
+//         if(var<0)
+//            res= d+getResources().getString(R.string.future)+" "+res;
+//
+//          else if(var>0)
+//            res= d+getResources().getString(R.string.past)+" "+res;
+//          else
+//           res= d+getResources().getString(R.string.present)+" "+res;
+//
+//          // setting the message
+//          tv.setText(res);
+//        }
+        //else
+          //{
+          // for an invalid date we'll print the reason
+          String pointer = dateObj.msg;
+          String msg=getResources().getString(Integer.parseInt(pointer));
+          tv.setText(msg);
+
+        //}
+      }
+//      catch (Exception e)
+//      {
+//        Toast.makeText(MainActivity.this, "Error :"+ e.toString(), Toast.LENGTH_SHORT).show();
+//      }
 
     });
 

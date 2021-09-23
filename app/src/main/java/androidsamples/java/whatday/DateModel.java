@@ -1,11 +1,15 @@
 package androidsamples.java.whatday;
 
+import static java.util.Calendar.DAY_OF_WEEK;
+import static java.util.Calendar.LONG;
+
 import androidx.annotation.NonNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Represents the date to be set, whether it is a valid date, and the message with error status or the day of the week.
@@ -88,14 +92,15 @@ public class DateModel {
         }
        else{
            //used https://java2blog.com/get-day-name-from-date-java/
-           Date day = new Date();
-           SimpleDateFormat simpleDateFormat;
-           Calendar c = Calendar.getInstance();
-           c.setTime(day);
-           int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+//         Date day = new Date();
+//         SimpleDateFormat simpleDateFormat;
 
-           String dayWeekText = new SimpleDateFormat("EEEE").format(day);
-           msg=dayWeekText;
+           Calendar calender = Calendar.getInstance();
+           calender.setFirstDayOfWeek(Calendar.MONDAY);
+           calender.set(y,m-1,d);
+           msg=calender.getDisplayName(DAY_OF_WEEK,LONG, Locale.US);
+
+          // int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 
 //           switch (dayOfWeek){
 //        case 7: msg = "Sunday";

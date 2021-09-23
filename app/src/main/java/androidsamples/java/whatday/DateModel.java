@@ -3,6 +3,7 @@ package androidsamples.java.whatday;
 import androidx.annotation.NonNull;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -11,7 +12,7 @@ import java.util.Date;
  */
 public class DateModel {
 
-  static String year,month,date,msg;
+  static String year, month, date, msg;
 
 
   /**
@@ -25,9 +26,9 @@ public class DateModel {
    */
   public static void initialize(String yearStr, String monthStr, String dateStr) {
     // TODO implement the method to match the description
-    year=yearStr;
-    month=monthStr;
-    date=dateStr;
+    year = yearStr;
+    month = monthStr;
+    date = dateStr;
   }
 
   /**
@@ -40,30 +41,26 @@ public class DateModel {
   @NonNull
   public static String getMessage() {
     // TODO implement the method to match the description
-     SimpleDateFormat simpleDateFormat;
+    int flag=0;
+    try {
+      Integer d = Integer.parseInt(date);
+      Integer m = Integer.parseInt(month);
+      Integer y = Integer.parseInt(year);
 
+    } catch (NumberFormatException e) {
+      msg = "Enter values in a proper numeric format";
+      return msg;
+    }
 
-      Calendar calendar = Calendar.getInstance();
-      calendar.set(Calendar.YEAR,Integer.parseInt(year));//Year
-      calendar.set(Calendar.DAY_OF_MONTH,Integer.parseInt(date));// Day of the month (1-31)
-      calendar.set(Calendar.MONTH,Integer.parseInt(month)-1);// Month (0-11)
+    int d = Integer.parseInt(date);
+    int m= Integer.parseInt(month);
+    int y= Integer.parseInt(year);
 
-      //read up on this a bit
-      simpleDateFormat = new SimpleDateFormat("EEEE");
-    return  simpleDateFormat.format(calendar.getTime());
-  }
+    Integer[] arr1 = {1,3,5,7,8,10,12};
+         Integer[] arr2 = { 4,6,9,11 };
 
-//after year,we decalre mnth and it autimatically checks if we use the getActualMaximum - https://docs.oracle.com/javase/7/docs/api/java/util/Calendar.html#getActualMaximum(int)
-
-    //add checking of valid string->int : https://www.programiz.com/java-programming/examples/check-string-numeric
-
-    public static int dateValidation(String year, String month, String date) {
-        int d=Integer.parseInt(date);
-        int m=Integer.parseInt(month);
-        int y=Integer.parseInt(year);
         m--;
-      int flag = 0;
-// upar neeche kardo year date ko
+
        if(y<=0)
       {
           msg="Invalid year";
@@ -80,37 +77,60 @@ public class DateModel {
           flag=-1;
         }
 
+      else if(y%4!=0&&m==1&&d>28)
+      {
+          msg= "February of "+y+" does not have 29 days";
+          flag=-1;
+      }
+       else if(contains(arr2,m+1)==true &&d>30) {
+            msg= "This month does not have 31 days";
+            flag=-1;
+        }
+       else{
+           //used https://java2blog.com/get-day-name-from-date-java/
+           Date day = new Date();
+           SimpleDateFormat simpleDateFormat;
+           Calendar c = Calendar.getInstance();
+           c.setTime(day);
+           int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 
-        return flag;
-    }
-}
+           String dayWeekText = new SimpleDateFormat("EEEE").format(day);
+           msg=dayWeekText;
 
-
-
-//      calendar.set(yearInt, monthInt, dateInt);
-//      Date currentDate = calender.getTime();
-//      int currentDay = currentDate.getDay();
-//      int min = calender.getMinimum(Calendar.YEAR);
-//      String dayText;
-//      System.out.println("Hello" + dateInt);
-//      switch (currentDay){
-//        case 0: dayText = "Sunday";
+//           switch (dayOfWeek){
+//        case 7: msg = "Sunday";
 //          break;
-//        case 1: dayText = "Monday";
+//        case 1: msg = "Monday";
 //          break;
-//        case 2: dayText = "Tuesday";
+//        case 2: msg = "Tuesday";
 //          break;
-//        case 3: dayText = "Wednesday";
+//        case 3: msg = "Wednesday";
 //          break;
-//        case 4: dayText = "Thursday";
+//        case 4: msg = "Thursday";
 //          break;
-//        case 5: dayText = "Friday";
+//        case 5: msg = "Friday";
 //          break;
-//        case 6: dayText = "Saturday";
+//        case 6: msg = "Saturday";
 //          break;
 //        default:
-//          throw new IllegalStateException("Unexpected value: " + currentDay);
+//          throw new IllegalStateException("Unexpected value: " + dayOfWeek);
 //      }
-//        if(flag!=-1)
-//          txtOutput.setText(dayText);
-//
+
+
+       }
+
+
+    return msg;
+  }
+
+    private static boolean contains(Integer[] arr, int m) {
+      boolean test = false;
+      for (int element : arr) {
+          if (element == m) {
+              test = true;
+              break;
+          }
+      }
+      return test;
+    }
+}

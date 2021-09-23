@@ -1,6 +1,7 @@
 package androidsamples.java.whatday;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,28 +35,25 @@ public class MainActivity extends AppCompatActivity {
     txtOutput = findViewById(R.id.txt_display);
 
     checkOutput.setOnClickListener(view->{
+    //Log.i(TAG,"Input:")
       String date = dateInput.getText().toString();
       String month = monthInput.getText().toString();
       String year = yearInput.getText().toString();
 
-      DateModel dateObj= new DateModel();
       DateModel.initialize(year,month,date);
+      txtOutput.setText(DateModel.getMessage());
 
-      int valid = dateObj.dateValidation(year,month,date);
+    });
 
-      if (valid==0) {
-          // getting the day
-          String res = DateModel.getMessage();
-          // check for present, past or future
-          String d=date+"/"+month+"/"+year+" ";
-          Calendar c = Calendar.getInstance();
+  }
+}
 
-          c.set(Calendar.MONTH, Integer.parseInt(month)-1);
-          c.set(Calendar.DATE, Integer.parseInt(date));
-          c.set(Calendar.YEAR, Integer.parseInt(year));
-          Date dateEntered = c.getTime();
-          Date currentDate = new Date();
-          int var=currentDate.compareTo(dateEntered);
+//          c.set(Calendar.MONTH, Integer.parseInt(month)-1);
+//          c.set(Calendar.DATE, Integer.parseInt(date));
+//          c.set(Calendar.YEAR, Integer.parseInt(year));
+//          Date dateEntered = c.getTime();
+//          Date currentDate = new Date();
+//          int var=currentDate.compareTo(dateEntered);
 
 //         if(var<0)
 //            res= d+getResources().getString(R.string.future)+" "+res;
@@ -69,18 +67,6 @@ public class MainActivity extends AppCompatActivity {
 //          tv.setText(res);
 //        }
 
-          String pointer = dateObj.msg;
-          String msg=getResources().getString(Integer.parseInt(pointer));
-          tv.setText(msg);
 
 
-      }
-//      catch (Exception e)
-//      {
-//        Toast.makeText(MainActivity.this, "Error :"+ e.toString(), Toast.LENGTH_SHORT).show();
-//      }
 
-    });
-
-  }
-}

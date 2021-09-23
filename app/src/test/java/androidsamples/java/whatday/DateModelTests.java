@@ -16,9 +16,20 @@ public class DateModelTests {
   }
 
   @Test
+  public void monthsCannotBeNegative() {
+    DateModel.initialize("-1", "8", "6");
+    assertThat(DateModel.getMessage(), is("Invalid year"));
+  }
+
+  @Test
   public void monthsCannotBeAbove12() {
     DateModel.initialize("1998", "14", "31");
     assertThat(DateModel.getMessage(), is("Invalid month"));
+  }
+  @Test
+  public void monthsCannotBeAbove31() {
+    DateModel.initialize("2051", "8", "32");
+    assertThat(DateModel.getMessage(), is("Invalid date"));
   }
 
   @Test

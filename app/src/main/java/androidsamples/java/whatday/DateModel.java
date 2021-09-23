@@ -95,10 +95,11 @@ public class DateModel {
 //         Date day = new Date();
 //         SimpleDateFormat simpleDateFormat;
 
+           Locale locale = Locale.getDefault();
            Calendar calender = Calendar.getInstance();
            calender.setFirstDayOfWeek(Calendar.MONDAY);
-           calender.set(y,m-1,d);
-           msg=calender.getDisplayName(DAY_OF_WEEK,LONG, Locale.US);
+           calender.set(y,m,d);
+           msg=calender.getDisplayName(DAY_OF_WEEK,LONG, locale);
 
           // int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 

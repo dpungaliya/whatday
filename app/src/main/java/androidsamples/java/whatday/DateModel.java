@@ -2,6 +2,7 @@ package androidsamples.java.whatday;
 
 import static java.util.Calendar.DAY_OF_WEEK;
 import static java.util.Calendar.LONG;
+import static java.util.Calendar.PM;
 
 import androidx.annotation.NonNull;
 
@@ -61,7 +62,7 @@ public class DateModel {
     int y= Integer.parseInt(year);
 
     Integer[] arr1 = {1,3,5,7,8,10,12};
-         Integer[] arr2 = { 4,6,9,11 };
+         Integer[] arr2 = { 2,4,6,9,11 };
 
         m--;
 
@@ -81,11 +82,16 @@ public class DateModel {
           flag=-1;
         }
 
-      else if(y%4!=0&&m==1&&d>28)
+      else if(y%4!=0&&m==1&&d==29)
       {
           msg= "February of "+y+" does not have 29 days";
           flag=-1;
       }
+      else if(y%4!=0 && m==1&&d==30)
+       {
+           msg= "February of "+y+" does not have 30 days";
+           flag=-1;
+       }
        else if(contains(arr2,m+1)==true &&d>30) {
             msg= "This month does not have 31 days";
             flag=-1;

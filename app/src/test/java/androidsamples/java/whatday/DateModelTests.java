@@ -43,7 +43,11 @@ public class DateModelTests {
     DateModel.initialize("2019", "2", "29");
     assertThat(DateModel.getMessage(), is("February of 2019 does not have 29 days"));
   }
-
+@Test
+  public void Feb30_2018isNotAValidDate() {
+    DateModel.initialize("2018", "2", "30");
+    assertThat(DateModel.getMessage(), is("February of 2018 does not have 30 days"));
+  }
   @Test
   public void Aug15_1947_Friday() {
     DateModel.initialize("1947", "8", "15");
